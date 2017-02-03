@@ -1,0 +1,35 @@
+<!Doctype>
+<html>
+	<head>
+		<script src="universal-required.js" type="text/javascript"></script>
+		<link href="universal-required.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<form id="Form1" onsubmit="return getFormValues();">
+			Text Fields:<br/>
+			<input type="text" class="required" placeholder="Required"/>
+			<br/>
+			<input type="text" placeholder="Not Required"/>
+			<br/>
+			<br/>
+			Radio Buttons<br/>
+			<i>Required</i><br/>
+			<input type="radio" name="radio1" class="required" /> Required<br/>
+			<input type="radio" name="radio1"/> Required<br/>
+			<input type="radio" name="radio1"/> Required<br/>
+			<br/>
+			<i>Not Required</i><br/>
+			<input type="radio" name="radio2"/> Not Required<br/>
+			<input type="radio" name="radio2"/> Not Required<br/>
+			<input type="radio" name="radio2"/> Not Required<br/>
+			<br/><br/>
+			Check Boxes<br/>
+			<input type="checkbox" class="required" /> Required<br/>
+			<input type="checkbox"/> Not Required<br/>
+			<br/>
+			<br/>
+			<font face="Arial, Helvetica, sans-serif" size="2" style="color:#FF0000; font-weight:bold; display:none;" id="error_message">Required Fields are Missing.</font><br/>
+			<input type="submit"/>
+			
+	</body>
+</html>
