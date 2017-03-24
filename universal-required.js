@@ -1,5 +1,8 @@
 // JavaScript Document
 
+//Runs the onLoad function as soon as the page is loaded. 
+window.onload = onLoad;
+
 function getFormValues() {
 	document.getElementById('error_message').style.display = 'none';
     var form = document.getElementById('Form1');//Selects the Form
@@ -62,5 +65,29 @@ function getFormValues() {
 			}
 		}
 		return false; //Stops the form from submitting. 
+	}
+}
+
+/*All code that needs to run as soon as the page is ready is placed here.*/
+function onLoad(){
+	var elem, i;
+	elem = document.querySelectorAll(".NoSpecialChar"); //Getting the elements by Class
+	
+	for(i = 0; i < elem.length; i++)//Goes through each element
+	{	//Adds the onkeup attribute needed. 
+		elem[i].setAttribute("onkeyup","stringTest(this)");
+	}
+}
+
+/*Checks the string for bad characters*/
+function stringTest(elem)
+{
+	//Bad Characers are searched for
+	if(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(elem.value))
+	{	//Disables the submit button if a character is found
+		document.querySelector('input[type="submit"]').disabled = true;
+	}else{
+		//Enables the submit button when no characters are found
+		document.querySelector('input[type="submit"]').disabled = false;
 	}
 }
