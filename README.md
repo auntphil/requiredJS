@@ -31,6 +31,18 @@
 <ul>
     <li>Message is displayed above the submit button</li>
 	<li>All Required Inputs are outlined in red.</li>
+	
+<b>Special Characters</b>
+<p>You can now filter characters that are not wanted. using the NoSpecialChar class</p>
+<ul>
+    <li>Characters are removed immediately when they are typed (except Ie, removes on lose focus)</li>
+    <li>Characters are Easily Added</li>
+</ul>
+<b>Results Special Character Failure</b>
+<ul>
+    <li>The Characer is removed the box</li>
+    <li>Other characters are unchanged</li>
+</ul>
 		
 <h3>CUSTIMZATION</h3>
 In the early development of the Script there is little easy customization. More will be coming.
