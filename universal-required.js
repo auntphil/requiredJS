@@ -9,8 +9,9 @@ function getFormValues() {
 	var error = false; //Sets Error to false
 	var length = form.length;
 	var curRadio;
+	var curCheck;
     for (var i=0, length; i<length; i++) { //Loops through each control in the form
-		if(hasClass(form[i],'required'))// == "required" || form[i].className == "required require_red") //Checking if the control is required
+		if(hasClass(form[i],'required'))//Checking if the control is required
 		{ //The control is required
 			if(form[i].value == "") //Checking if the control value is blank
 			{ //Control value is blank and required
@@ -46,9 +47,34 @@ function getFormValues() {
 				if(error == true)
 					break;
 			}//if
-			if(form[i].type == "checkbox" && !form[i].checked) //Checking if the control is a radio button
-			{ //control is a radio button
-					error = true;
+			
+			
+			if(form[i].type == "checkbox") //Checking if the control is a checkbox
+			{ //control is a checkbox			
+			
+				if(curCheck == form[i].name) //Checking if the checkbox has already been checked. 
+				{ //Already been checked. Skipping this iteration
+					continue;
+				}else{ //Not checked before. Adding checkbox to current.
+					curCheck = form[i].name;
+				}//else
+				
+				for (var j=0, length; j<length; j++) { //Loops through each control in the form
+					if(form[j].type == "checkbox") //Checking if checkbox
+					{ //checkbox
+						if(form[j].name == curCheck) //Check agains form[i]
+						{
+							if(form[j].checked)
+							{
+								error = false;
+								break;
+							}else{
+								error = true;
+							} //if
+						}//if
+					}//if
+				}//for
+				if(error == true)
 					break;
 			}//if
 		}//if
@@ -74,7 +100,6 @@ function getFormValues() {
 /*Checking if element has class*/
 function hasClass(elem, cls)
 {
-	console.log(elem.className);
 	return (' ' + elem.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 
