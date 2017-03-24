@@ -10,7 +10,7 @@ function getFormValues() {
 	var length = form.length;
 	var curRadio;
     for (var i=0, length; i<length; i++) { //Loops through each control in the form
-		if(form[i].className == "required" || form[i].className == "required require_red") //Checking if the control is required
+		if(hasClass(form[i],'required'))// == "required" || form[i].className == "required require_red") //Checking if the control is required
 		{ //The control is required
 			if(form[i].value == "") //Checking if the control value is blank
 			{ //Control value is blank and required
@@ -59,13 +59,23 @@ function getFormValues() {
 		document.getElementById('error_message').style.display = "inline";
 		//alert("Error Has Occured"); //Testing. Shows error has occurred
 		for (var i=0, length; i<length; i++) { //Loops through each control in the form
-			if(form[i].className == "required") //Checking if the control is required
+			if(hasClass(form[i],"required")) //Checking if the control is required
 			{ //The control is required
-				form[i].className += " require_red";
+				if(!hasClass(form[i].value,"require_red"))
+				{
+					form[i].className += " require_red";
+				}
 			}
 		}
 		return false; //Stops the form from submitting. 
 	}
+}
+
+/*Checking if element has class*/
+function hasClass(elem, cls)
+{
+	console.log(elem.className);
+	return (' ' + elem.className + ' ').indexOf(' ' + cls + ' ') > -1;
 }
 
 /*All code that needs to run as soon as the page is ready is placed here.*/
