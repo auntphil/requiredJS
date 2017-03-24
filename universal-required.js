@@ -83,11 +83,10 @@ function onLoad(){
 function stringTest(elem)
 {
 	//Bad Characers are searched for
-	if(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(elem.value))
-	{	//Disables the submit button if a character is found
-		document.querySelector('input[type="submit"]').disabled = true;
-	}else{
-		//Enables the submit button when no characters are found
-		document.querySelector('input[type="submit"]').disabled = false;
+	if(/[<>!$?\\//'"&]/g.test(elem.value))
+	{	/*Removes the bad character
+		<	>	!	$	?	/	\	'	"	&
+		*/
+		elem.value = elem.value.replace(/[<>!$?\\//'"&]/g,'');
 	}
 }
