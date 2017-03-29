@@ -89,7 +89,7 @@ function getFormValues() {
 			{ //The control is required
 				if(!hasClass(form[i].value,"require_red"))
 				{
-					form[i].className += " require_red";
+					form[i].style.outline = '1px solid red';
 				}
 			}
 		}
