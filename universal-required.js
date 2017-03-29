@@ -94,6 +94,8 @@ function getFormValues() {
 			}
 		}
 		return false; //Stops the form from submitting. 
+	}else{
+		return true;
 	}
 }
 
