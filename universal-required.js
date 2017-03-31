@@ -3,9 +3,9 @@
 //Runs the onLoad function as soon as the page is loaded. 
 window.onload = onLoad;
 
-function getFormValues() {
+function getFormValues(formId) {
 	document.getElementById('error_message').style.display = 'none';
-    var form = document.getElementById('Form1');//Selects the Form
+    var form = document.getElementById(formId);//Selects the Form
 	var error = false; //Sets Error to false
 	var length = form.length;
 	var curRadio;
