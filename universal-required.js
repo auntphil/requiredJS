@@ -7,10 +7,28 @@ function getFormValues(formId) {
 	document.getElementById('error_message').style.display = 'none';
     var form = document.getElementById(formId);//Selects the Form
 	var error = false; //Sets Error to false
+	var type = ''; //Sets Error to false
 	var length = form.length;
 	var curRadio;
 	var curCheck;
-    for (var i=0, length; i<length; i++) { //Loops through each control in the form
+	
+	//Loops through each control in the form
+    for (var i=0, length; i<length; i++) {
+		form[i].style.outline = 'initial';
+		/*******************************************
+		 *Checking if a field is Number or Letter Only
+		 *******************************************/	
+		if(hasClass(form[i],'AlphaNumb')){					//Checking for AlphaNumberic Class
+			if(!/^[a-zA-Z0-9\s]+$/.test(form[i].value)){	//If the Field has anything other than Alpha Numeric and Space
+				if(form[i].value != '')						//Allows for the field to be blank
+				{
+					type="AlphaNumberic"		//Error Type
+					error=true;					//Error
+					break;						//Ends Loop
+				}
+			}
+		}
+		
 		if(hasClass(form[i],'required'))//Checking if the control is required
 		{ //The control is required
 			if(form[i].value == "") //Checking if the control value is blank
@@ -82,10 +100,21 @@ function getFormValues(formId) {
 	
 	if(error) //Checks if an error has occured
 	{//An error has occurred. 
+		switch(type){
+			case 'AlphaNumberic':
+				errorClass = "AlphaNumb";
+				errorMessage = "Field can only be Letters or Numbers"
+				break;
+			default:
+				errorClass = "required";
+				errorMessage = "Required Fields are Missing."
+				break;
+		}
+		document.getElementById('error_message').innerHTML = errorMessage;
 		document.getElementById('error_message').style.display = "inline";
-		//alert("Error Has Occured"); //Testing. Shows error has occurred
+		
 		for (var i=0, length; i<length; i++) { //Loops through each control in the form
-			if(hasClass(form[i],"required")) //Checking if the control is required
+			if(hasClass(form[i],errorClass)) //Checking if the control is required
 			{ //The control is required
 				if(!hasClass(form[i].value,"require_red"))
 				{
