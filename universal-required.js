@@ -12,9 +12,21 @@ var checkRequired = [];
 var radioRequired = [];
 
 function getFormValues(formId) {
+	if (formId === undefined) {
+        var form = document.forms[0];
+    }else{
+		var form = document.getElementById(formId);//Selects the Form
+	}
+	
+	if(form === null){
+		errorMessage = "Cannot submit the form. Problem with the form"
+		document.getElementById('error_message').innerHTML = errorMessage;
+		document.getElementById('error_message').style.display = "inline";
+		return false;
+	}
 
 	document.getElementById('error_message').style.display = 'none';
-    var form = document.getElementById(formId);//Selects the Form
+    
 	var error = false; //Sets Error to false
 	var type = ''; //Sets Error to false
 	var length = form.length;
