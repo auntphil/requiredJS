@@ -186,7 +186,7 @@ function checkAlphaNumeric(form, i){
 	/*******************************************
 	 *Checking if a field is Number or Letter Only
 	 *******************************************/
-	if(hasClass(form[i],'AlphaNumb')){					//Checking for AlphaNumberic Class
+	if(hasClass(form[i],'AlphaNumeric')){					//Checking for AlphaNumberic Class
 		if(!/^[a-zA-Z0-9\s]+$/.test(form[i].value)){	//If the Field has anything other than Alpha Numeric and Space
 			if(form[i].value != '')						//Allows for the field to be blank
 			{
