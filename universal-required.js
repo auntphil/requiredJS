@@ -1,9 +1,10 @@
 // JavaScript Document
 
-//Runs the onLoad function as soon as the page is loaded. 
-window.onload = onLoad;
 var curRadio;
 var curCheck;
+
+var checkRequired = [];
+var radioRequired = [];
 
 function getFormValues(formId) {
 
@@ -18,12 +19,23 @@ function getFormValues(formId) {
 	var name;
 	var nameLength;
 	var nameElements;
+
+	var AlphaNumericError = false;
 	
-	var required = [];
+	requiredFields = [];
+	var requiredFieldsLength = 0;
+	checkRequired = [];
+	radioRequired = [];
 	
 	//Loops through each control in the form
     for (var i=0, length; i<length; i++) {
-		//checkAlphaNumeric(form, i);
+		form[i].style.outline = 'initial';
+		
+		if(checkAlphaNumeric(form, i)){
+			console.log('AlphaNumberic Fail');
+			AlphaNumericError = true;
+			break;
+		}
 		
 		form[i].style.outline = 'initial';
 		
@@ -34,7 +46,6 @@ function getFormValues(formId) {
 			if(form[i].value == "")
 			{
 				error = true; //Sets error to true
-				break; //Breaks out of the loop. There is no reason to search for more errors. 
 			}
 			
 			/*If Control is a radio*/
@@ -42,7 +53,6 @@ function getFormValues(formId) {
 			{ //control is a radio button
 				if(checkboxRadio(true,form,i)){
 					error = true;
-					break;
 				}
 			}//if
 			
@@ -51,7 +61,6 @@ function getFormValues(formId) {
 			{
 				if(checkboxRadio(false,form,i)){
 					error=true;
-					break;
 				}
 			}//if
 		}//if
@@ -72,14 +81,12 @@ function getFormValues(formId) {
 		document.getElementById('error_message').innerHTML = errorMessage;
 		document.getElementById('error_message').style.display = "inline";
 		
-		for (var i=0, length; i<length; i++) { //Loops through each control in the form
-			if(hasClass(form[i],errorClass)) //Checking if the control is required
-			{ //The control is required
-				if(!hasClass(form[i].value,"require_red"))
-				{
-					form[i].style.outline = '1px solid red';
-				}
-			}
+		requiredFields = document.querySelectorAll(".required");
+		requiredFieldsLength = requiredFields.length;
+		
+		for (var i=0, requiredFieldsLength; i<requiredFieldsLength; i++) { //Loops through each control in the form
+			if(requiredFields[i].value == '' || radioRequired.indexOf(requiredFields[i].name) != -1 || checkRequired.indexOf(requiredFields[i].name) != -1)
+				requiredFields[i].style.outline = '1px solid red';
 		}
 		return false; //Stops the form from submitting. 
 	}else{
@@ -88,32 +95,8 @@ function getFormValues(formId) {
 }
 
 /*Checking if element has class*/
-function hasClass(elem, cls)
-{
+function hasClass(elem, cls){
 	return (' ' + elem.className + ' ').indexOf(' ' + cls + ' ') > -1;
-}
-
-/*All code that needs to run as soon as the page is ready is placed here.*/
-function onLoad(){
-	var elem, i;
-	elem = document.querySelectorAll(".NoSpecialChar"); //Getting the elements by Class
-	
-	for(i = 0; i < elem.length; i++)//Goes through each element
-	{	//Adds the onkeup attribute needed. 
-		elem[i].setAttribute("onkeyup","stringTest(this)");
-	}
-}
-
-/*Checks the string for bad characters*/
-function stringTest(elem)
-{
-	//Bad Characers are searched for
-	if(/[<>!$?\\//'"&]/g.test(elem.value))
-	{	/*Removes the bad character
-		<	>	!	$	?	/	\	'	"	&
-		*/
-		elem.value = elem.value.replace(/[<>!$?\\//'"&]/g,'');
-	}
 }
 
 /******************************************************
@@ -138,13 +121,34 @@ function checkboxRadio(type,form,i){
 	/*Loops through each radio button in this group*/
 	for (var j=0, nameLength; j<nameLength; j++) {
 		if(nameElements[j].checked){
+			if(type){
+				if(radioRequired.indexOf(nameElements[j].name) != -1){
+					temp = radioRequired.indexOf(nameElements[j].name);
+					radioRequired.splice(temp,1);
+				}
+			}else{
+				if(checkRequired.indexOf(nameElements[j].name) != -1){
+					temp = checkRequired.indexOf(nameElements[j].name);
+					checkRequired.splice(temp,1);
+				}
+			}
 			error = false;	//Checked. No Error
 			break;			//Break Loop
 		}else{
 			error = true;	//Not Checked. Error Continue Loop
+			if(type){
+				console.log('Radio');
+				if(radioRequired.indexOf(nameElements[j].name) == -1)
+					radioRequired.push(nameElements[j].name);
+			}else{
+				console.log('Check');
+				if(checkRequired.indexOf(nameElements[j].name) == -1)
+					checkRequired.push(nameElements[j].name);
+			}
 		} //if
 	}//for
 	/*Is there an error*/
+	console.log(checkRequired);
 	if(error)
 		return true;
 	else
@@ -156,16 +160,16 @@ function checkboxRadio(type,form,i){
 function checkAlphaNumeric(form, i){
 	/*******************************************
 	 *Checking if a field is Number or Letter Only
-	 *******************************************/	
+	 *******************************************/
 	if(hasClass(form[i],'AlphaNumb')){					//Checking for AlphaNumberic Class
 		if(!/^[a-zA-Z0-9\s]+$/.test(form[i].value)){	//If the Field has anything other than Alpha Numeric and Space
 			if(form[i].value != '')						//Allows for the field to be blank
 			{
 				type="AlphaNumberic"		//Error Type
-				error=true;					//Error
-				break;						//Ends Loop
+				return true;				//Error
 			}
 		}
 	}
+	return false;
 }
 
