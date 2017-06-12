@@ -11,6 +11,9 @@ var curCheck;
 var checkRequired = [];
 var radioRequired = [];
 
+//Runs the onLoad function as soon as the page is loaded. 
+window.onload = onLoad;
+
 function getFormValues(formId) {
 	if (formId === undefined) {
         var form = document.forms[0];
@@ -122,6 +125,19 @@ function getFormValues(formId) {
 /*Checking if element has class*/
 function hasClass(elem, cls){
 	return (' ' + elem.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+/******************************************************
+ OnLoad. Grabs the form
+******************************************************/
+function onLoad(){
+	var form = document.forms[0];
+	if(form === undefined){
+		return;
+	}else{
+		if(form.getAttribute("onsubmit") == undefined)
+			form.setAttribute("onSubmit", "return getFormValues();")
+	}
 }
 
 /******************************************************
