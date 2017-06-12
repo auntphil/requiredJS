@@ -1,4 +1,9 @@
-// JavaScript Document
+/****************************
+ *Universal Require			*
+ *Author: Andrew Hochmuth	*
+ *Build: 1.0				*
+ *Date: June 12, 2017		*
+ ****************************/
 
 var curRadio;
 var curCheck;
