@@ -21,6 +21,7 @@ function getFormValues(formId) {
 	var nameElements;
 
 	var AlphaNumericError = false;
+	var AlphaNumericName = [];
 	
 	requiredFields = [];
 	var requiredFieldsLength = 0;
@@ -28,13 +29,13 @@ function getFormValues(formId) {
 	radioRequired = [];
 	
 	//Loops through each control in the form
-    for (var i=0, length; i<length; i++) {
+    for (var i=0; i<length; i++) {
 		form[i].style.outline = 'initial';
 		
 		if(checkAlphaNumeric(form, i)){
 			console.log('AlphaNumberic Fail');
 			AlphaNumericError = true;
-			break;
+			AlphaNumericName.push(form[i].name);
 		}
 		
 		form[i].style.outline = 'initial';
@@ -65,26 +66,33 @@ function getFormValues(formId) {
 			}//if
 		}//if
     }//for
-	
+	if(AlphaNumericError){
+		errorMessage = "Highlighted Fields Must be Alpha Numberic Only."
+		
+		document.getElementById('error_message').innerHTML = errorMessage;
+		document.getElementById('error_message').style.display = "inline";
+		
+		for(j=0;j<AlphaNumericName.length;j++){
+			AlphaNumericElem = document.getElementsByName(AlphaNumericName[j]);
+			for (i = 0; i < AlphaNumericElem.length; i++) {
+				AlphaNumericElem[i].style.outline = '1px solid red';
+				
+			}
+		}
+		
+		return false;
+	}
 	if(error) //Checks if an error has occured
 	{//An error has occurred. 
-		switch(type){
-			case 'AlphaNumberic':
-				errorClass = "AlphaNumb";
-				errorMessage = "Field can only be Letters or Numbers"
-				break;
-			default:
-				errorClass = "required";
-				errorMessage = "Required Fields are Missing."
-				break;
-		}
+		errorMessage = "Required Fields are Missing."
+
 		document.getElementById('error_message').innerHTML = errorMessage;
 		document.getElementById('error_message').style.display = "inline";
 		
 		requiredFields = document.querySelectorAll(".required");
 		requiredFieldsLength = requiredFields.length;
 		
-		for (var i=0, requiredFieldsLength; i<requiredFieldsLength; i++) { //Loops through each control in the form
+		for (var i=0; i<requiredFieldsLength; i++) { //Loops through each control in the form
 			if(requiredFields[i].value == '' || radioRequired.indexOf(requiredFields[i].name) != -1 || checkRequired.indexOf(requiredFields[i].name) != -1)
 				requiredFields[i].style.outline = '1px solid red';
 		}
@@ -119,7 +127,7 @@ function checkboxRadio(type,form,i){
 	}//else
 	
 	/*Loops through each radio button in this group*/
-	for (var j=0, nameLength; j<nameLength; j++) {
+	for (var j=0; j<nameLength; j++) {
 		if(nameElements[j].checked){
 			if(type){
 				if(radioRequired.indexOf(nameElements[j].name) != -1){
