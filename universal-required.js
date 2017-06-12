@@ -30,7 +30,7 @@ function getFormValues(formId) {
 	
 	//Loops through each control in the form
     for (var i=0; i<length; i++) {
-		form[i].style.outline = 'initial';
+		form[i].style.outline = 'none';
 		
 		if(checkAlphaNumeric(form, i)){
 			console.log('AlphaNumberic Fail');
@@ -75,7 +75,7 @@ function getFormValues(formId) {
 		for(j=0;j<AlphaNumericName.length;j++){
 			AlphaNumericElem = document.getElementsByName(AlphaNumericName[j]);
 			for (i = 0; i < AlphaNumericElem.length; i++) {
-				AlphaNumericElem[i].style.outline = '1px solid red';
+				AlphaNumericElem[i].style.outline = '2px solid red';
 				
 			}
 		}
@@ -94,7 +94,7 @@ function getFormValues(formId) {
 		
 		for (var i=0; i<requiredFieldsLength; i++) { //Loops through each control in the form
 			if(requiredFields[i].value == '' || radioRequired.indexOf(requiredFields[i].name) != -1 || checkRequired.indexOf(requiredFields[i].name) != -1)
-				requiredFields[i].style.outline = '1px solid red';
+				requiredFields[i].style.outline = '2px solid red';
 		}
 		return false; //Stops the form from submitting. 
 	}else{
