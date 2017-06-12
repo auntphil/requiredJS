@@ -6,15 +6,15 @@
 	<body>
 		<form id="Form1" onsubmit="return getFormValues('Form1');">
 			Text Fields:<br/>
-			<input type="text" class="required NoSpecialChar" placeholder="Required"/>
+			<input type="text" name="text1" class="required NoSpecialChar" placeholder="Required"/>
 			<br/>
-			<input type="text" placeholder="Not Required"/>
+			<input type="text" name="text2" placeholder="Not Required"/>
 			<br/>
-			<input type="text" placeholder="No Special Characters" class="NoSpecialChar"/>
+			<input type="text" name="text3" placeholder="No Special Characters" class="NoSpecialChar"/>
 			<br/>
-			<input type="text" placeholder="Alpha Numberic" class="AlphaNumb"/>
+			<input type="text" name="text4" placeholder="Alpha Numberic" class="AlphaNumb"/>
 			<br/>
-			<input type="text" placeholder="Alpha Numberic Required" class="AlphaNumb required"/>
+			<input type="text" name="text5" placeholder="Alpha Numberic Required" class="AlphaNumb required"/>
 			<br/>
 			<br/>
 			Radio Buttons<br/>
@@ -30,7 +30,8 @@
 			<br/><br/>
 			Check Boxes<br/>
 			<input type="checkbox" name='test[]' class="required" /> Required<br/>
-			<input type="checkbox" name='test[]'class="required"/> Not Required<br/>
+			<input type="checkbox" name='test[]' class="required" /> Required2<br/>
+			<input type="checkbox" name='NotRequiredCB'/> Not Required<br/>
 			<br/>
 			<br/>
 			<font face="Arial, Helvetica, sans-serif" size="2" style="color:#FF0000; font-weight:bold; display:none;" id="error_message"></font><br/>
