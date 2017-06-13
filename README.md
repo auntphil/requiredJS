@@ -24,34 +24,28 @@
 <b>Required<b>
 <ul>
     <li>Inputs need to be part of the 'required' class.</li>
-	<li>Form has the id of From1</li>
-	<li>onsubmit="return getFormValues();"</li>
+	<li>Form does not need any special id</li>
+	<li>Form does not need any onSubmit</li>
 </ul>
 <b>Results of Requirements failure</b>
 <ul>
     <li>Message is displayed above the submit button</li>
 	<li>All Required Inputs are outlined in red.</li>
 	
-<b>Special Characters</b>
-<p>You can now filter characters that are not wanted. using the NoSpecialChar class</p>
+<b>AlphaNumeric</b>
+<p>You can now filter characters that are not wanted.</p>
 <ul>
-    <li>Characters are removed immediately when they are typed (except Ie, removes on lose focus)</li>
-    <li>Characters are Easily Added</li>
+    <li>Only Allows Alpha Numeric</li>
+    <li>The error box is highlighted and only that one</li>
+    <li>Special Message about Error</li>
 </ul>
-<b>Results Special Character Failure</b>
-<ul>
-    <li>The Characer is removed the box</li>
-    <li>Other characters are unchanged</li>
-</ul>
-		
-<h3>CUSTIMZATION</h3>
-In the early development of the Script there is little easy customization. More will be coming.
+
+
 	
 <h3>INFORMATION</h3>
-<b>Radio Buttons</b>
+<b>Radio Buttons/Checkboxes</b>
 <ul>
 	<li>Required class only has to be on one of the radios per group, you can place on all if you would like</li>
-    <li>Only the radio with the required class with be outlined<br/>
-	    <i>+ May fix this in future versions</i></li>
+    <li>Only the controls with required will be outlined. Put it on all controls.</li>
 </ul>
 	
