@@ -1,7 +1,7 @@
 /****************************
  *Universal Require			*
  *Author: Andrew Hochmuth	*
- *Build: 1.0				*
+ *Build: 1.1				*
  *Date: June 12, 2017		*
  ****************************/
 
@@ -40,8 +40,11 @@ function getFormValues(formId) {
 	var nameLength;
 	var nameElements;
 
-	var AlphaNumericError = false;
+	var ErrorType = '';
+	
 	var AlphaNumericName = [];
+	
+	var NumericName = [];
 	
 	requiredFields = [];
 	var requiredFieldsLength = 0;
@@ -52,10 +55,24 @@ function getFormValues(formId) {
     for (var i=0; i<length; i++) {
 		form[i].style.outline = 'none';
 		
+		/**************************
+		 *Alpha Numeric Only Check*
+		 **************************/
 		if(checkAlphaNumeric(form, i)){
-			console.log('AlphaNumberic Fail');
-			AlphaNumericError = true;
+			console.log('AlphaNumeric Fail');
+			error = true;
+			ErrorType = 'AlphaNumeric';
 			AlphaNumericName.push(form[i].name);
+		}
+		
+		/********************
+		 *Numeric Only Check*
+		 ********************/
+		if(checkNumeric(form, i)){
+			console.log('Numeric Fail');
+			error = true;
+			ErrorType = 'isNumeric';
+			NumericName.push(form[i].name);
 		}
 		
 		form[i].style.outline = 'initial';
@@ -86,37 +103,55 @@ function getFormValues(formId) {
 			}//if
 		}//if
     }//for
-	if(AlphaNumericError){
-		errorMessage = "Highlighted Fields Must be Alpha Numberic Only."
+	
+	if(error){
+		switch(ErrorType){
+			case 'AlphaNumeric':
+				errorMessage = "Highlighted Fields Must be Alpha Numeric Only."
 		
-		document.getElementById('error_message').innerHTML = errorMessage;
-		document.getElementById('error_message').style.display = "inline";
-		
-		for(j=0;j<AlphaNumericName.length;j++){
-			AlphaNumericElem = document.getElementsByName(AlphaNumericName[j]);
-			for (i = 0; i < AlphaNumericElem.length; i++) {
-				AlphaNumericElem[i].style.outline = '2px solid red';
+				document.getElementById('error_message').innerHTML = errorMessage;
+				document.getElementById('error_message').style.display = "inline";
 				
-			}
-		}
+				for(j=0;j<AlphaNumericName.length;j++){
+					AlphaNumericElem = document.getElementsByName(AlphaNumericName[j]);
+					for (i = 0; i < AlphaNumericElem.length; i++) {
+						AlphaNumericElem[i].style.outline = '2px solid red';
+						
+					}
+				}
+				break;
+			case 'isNumeric':
+				errorMessage = "Highlighted Fields Must be Numeric Only."
 		
-		return false;
-	}
-	if(error) //Checks if an error has occured
-	{//An error has occurred. 
-		errorMessage = "Required Fields are Missing."
+				document.getElementById('error_message').innerHTML = errorMessage;
+				document.getElementById('error_message').style.display = "inline";
+				
+				for(j=0;j<NumericName.length;j++){
+					NumericName = document.getElementsByName(NumericName[j]);
+					for (i = 0; i < NumericName.length; i++) {
+						NumericName[i].style.outline = '2px solid red';
+						
+					}
+				}
+				break;
+			default:
+			console.log('Require Fail');
+			errorMessage = "Required Fields are Missing."
 
-		document.getElementById('error_message').innerHTML = errorMessage;
-		document.getElementById('error_message').style.display = "inline";
-		
-		requiredFields = document.querySelectorAll(".required");
-		requiredFieldsLength = requiredFields.length;
-		
-		for (var i=0; i<requiredFieldsLength; i++) { //Loops through each control in the form
-			if(requiredFields[i].value == '' || radioRequired.indexOf(requiredFields[i].name) != -1 || checkRequired.indexOf(requiredFields[i].name) != -1)
-				requiredFields[i].style.outline = '2px solid red';
+			document.getElementById('error_message').innerHTML = errorMessage;
+			document.getElementById('error_message').style.display = "inline";
+			
+			requiredFields = document.querySelectorAll(".required");
+			requiredFieldsLength = requiredFields.length;
+			
+			for (var i=0; i<requiredFieldsLength; i++) { //Loops through each control in the form
+				if(requiredFields[i].value == '' || radioRequired.indexOf(requiredFields[i].name) != -1 || checkRequired.indexOf(requiredFields[i].name) != -1)
+					requiredFields[i].style.outline = '2px solid red';
+			}
+			
+			
 		}
-		return false; //Stops the form from submitting. 
+		return false;
 	}else{
 		return true;
 	}
@@ -178,18 +213,15 @@ function checkboxRadio(type,form,i){
 		}else{
 			error = true;	//Not Checked. Error Continue Loop
 			if(type){
-				console.log('Radio');
 				if(radioRequired.indexOf(nameElements[j].name) == -1)
 					radioRequired.push(nameElements[j].name);
 			}else{
-				console.log('Check');
 				if(checkRequired.indexOf(nameElements[j].name) == -1)
 					checkRequired.push(nameElements[j].name);
 			}
 		} //if
 	}//for
 	/*Is there an error*/
-	console.log(checkRequired);
 	if(error)
 		return true;
 	else
@@ -199,18 +231,24 @@ function checkboxRadio(type,form,i){
  Checking if the Input is Alpha Numeric Only
 ******************************************************/
 function checkAlphaNumeric(form, i){
-	/*******************************************
-	 *Checking if a field is Number or Letter Only
-	 *******************************************/
-	if(hasClass(form[i],'AlphaNumeric')){					//Checking for AlphaNumberic Class
+	if(hasClass(form[i],'AlphaNumeric')){				//Checking for AlphaNumberic Class
 		if(!/^[a-zA-Z0-9\s]+$/.test(form[i].value)){	//If the Field has anything other than Alpha Numeric and Space
 			if(form[i].value != '')						//Allows for the field to be blank
-			{
-				type="AlphaNumberic"		//Error Type
-				return true;				//Error
-			}
+				return true;							//Error
 		}
 	}
 	return false;
 }
 
+/******************************************************
+ Checking if the Input is Numeric Only
+******************************************************/
+function checkNumeric(form, i){
+	if(hasClass(form[i],'isNumeric')){					//Checking for Numeric Class
+		if(!/^[0-9\s]+$/.test(form[i].value)){			//If the Field has anything other than Numeric and Space
+			if(form[i].value != '')						//Allows for the field to be blank
+				return true;							//Error
+		}
+	}
+	return false;
+}
