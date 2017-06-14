@@ -33,9 +33,17 @@
 	<li>All Required Inputs are outlined in red.</li>
 	
 <b>AlphaNumeric</b>
-<p>You can now filter characters that are not wanted.</p>
+<p>Adding this class only allows letters and numbers in the field.</p>
 <ul>
     <li>Only Allows Alpha Numeric</li>
+    <li>The error box is highlighted and only that one</li>
+    <li>Special Message about Error</li>
+</ul>
+
+<b>isNumeric</b>
+<p>Adding this class only allows Positive numbers in the field</p>
+<ul>
+    <li>Only Allows Positive Numeric</li>
     <li>The error box is highlighted and only that one</li>
     <li>Special Message about Error</li>
 </ul>
