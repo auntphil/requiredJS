@@ -1,8 +1,8 @@
 /****************************
  *Universal Require			*
  *Author: Andrew Hochmuth	*
- *Build: 1.1				*
- *Date: June 12, 2017		*
+ *Build: 1.2				*
+ *Date: July 10, 2017		*
  ****************************/
 
 var curRadio;
@@ -27,8 +27,15 @@ function getFormValues(formId) {
 		document.getElementById('error_message').style.display = "inline";
 		return false;
 	}
+	
 
-	document.getElementById('error_message').style.display = 'none';
+	try{
+		document.getElementById('error_message').style.display = 'none';
+	}catch(err){
+		console.log("ERROR Processing!")
+		console.log(err)
+		return false;
+	}
     
 	var error = false; //Sets Error to false
 	var type = ''; //Sets Error to false
