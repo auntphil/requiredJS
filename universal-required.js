@@ -1,8 +1,8 @@
 /****************************
  *Universal Require			*
  *Author: Andrew Hochmuth	*
- *Build: 1.2				*
- *Date: July 10, 2017		*
+ *Build: 1.3				*
+ *Date: August 09, 2017		*
  ****************************/
 
 var curRadio;
@@ -20,20 +20,17 @@ function getFormValues(formId) {
     }else{
 		var form = document.getElementById(formId);//Selects the Form
 	}
+    
+    //Checking if the error message is already on screen. 
+    //If the message is on screen remove it
+    if(document.getElementById('errorMessage_requiredJS') != undefined){
+        document.getElementById('errorMessage_requiredJS').remove();
+    }
 	
 	if(form === null){
 		errorMessage = "Cannot submit the form. Problem with the form"
 		document.getElementById('error_message').innerHTML = errorMessage;
 		document.getElementById('error_message').style.display = "inline";
-		return false;
-	}
-	
-
-	try{
-		document.getElementById('error_message').style.display = 'none';
-	}catch(err){
-		console.log("ERROR Processing!")
-		console.log(err)
 		return false;
 	}
     
@@ -115,10 +112,7 @@ function getFormValues(formId) {
 		switch(ErrorType){
 			case 'AlphaNumeric':
 				errorMessage = "Highlighted Fields Must be Alpha Numeric Only."
-		
-				document.getElementById('error_message').innerHTML = errorMessage;
-				document.getElementById('error_message').style.display = "inline";
-				
+                
 				for(j=0;j<AlphaNumericName.length;j++){
 					AlphaNumericElem = document.getElementsByName(AlphaNumericName[j]);
 					for (i = 0; i < AlphaNumericElem.length; i++) {
@@ -129,10 +123,7 @@ function getFormValues(formId) {
 				break;
 			case 'isNumeric':
 				errorMessage = "Highlighted Fields Must be Numeric Only."
-		
-				document.getElementById('error_message').innerHTML = errorMessage;
-				document.getElementById('error_message').style.display = "inline";
-				
+						
 				for(j=0;j<NumericName.length;j++){
 					NumericName = document.getElementsByName(NumericName[j]);
 					for (i = 0; i < NumericName.length; i++) {
@@ -145,9 +136,6 @@ function getFormValues(formId) {
 			console.log('Require Fail');
 			errorMessage = "Required Fields are Missing."
 
-			document.getElementById('error_message').innerHTML = errorMessage;
-			document.getElementById('error_message').style.display = "inline";
-			
 			requiredFields = document.querySelectorAll(".required");
 			requiredFieldsLength = requiredFields.length;
 			
@@ -155,9 +143,26 @@ function getFormValues(formId) {
 				if(requiredFields[i].value == '' || radioRequired.indexOf(requiredFields[i].name) != -1 || checkRequired.indexOf(requiredFields[i].name) != -1)
 					requiredFields[i].style.outline = '2px solid red';
 			}
-			
-			
 		}
+        
+        //Getting the submit button element for this form
+        var submit_elem = form.querySelector('input[type="submit"]');
+        
+        //Creating a span to go around the Error Message
+        var span = document.createElement('span');
+        span.innerHTML = errorMessage;
+        
+        //Error Styling
+        span.style.size = '2';
+        span.style.color = "#FF0000";
+        span.style.display = "block";
+        span.style.fontWeight = "bold";
+        span.id = "errorMessage_requiredJS";
+        
+        //Placing the error right before the submit button
+        form.insertBefore(span, submit_elem);
+        
+        
 		return false;
 	}else{
 		return true;
