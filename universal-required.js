@@ -1,7 +1,7 @@
 /****************************
  *Universal Require			*
  *Author: Andrew Hochmuth	*
- *Build: 1.3				*
+ *Build: 1.3.1				*
  *Date: August 09, 2017		*
  ****************************/
 
@@ -24,7 +24,7 @@ function getFormValues(formId) {
     //Checking if the error message is already on screen. 
     //If the message is on screen remove it
     if(document.getElementById('errorMessage_requiredJS') != undefined){
-        document.getElementById('errorMessage_requiredJS').remove();
+        form.removeChild(document.getElementById('errorMessage_requiredJS'));
     }
 	
 	if(form === null){

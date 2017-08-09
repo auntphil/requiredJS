@@ -14,8 +14,6 @@
 <ul>
     <li>universal-required.js<br/>
     	<i>- Does all the calculations</i></li>
-    <li>universal-required.css<br/>
-    	<i>- Only has one class for red outline</i></li>
     <li>index.html<br/>
     	<i>- Test page to show the script</i></li>
 </ul>
@@ -30,6 +28,7 @@
 <b>Results of Requirements failure</b>
 <ul>
     <li>Message is displayed above the submit button</li>
+    <li>No need for a div/span. Error is inserted into the page above the "Submit Button";
 	<li>All Required Inputs are outlined in red.</li>
 	
 <b>AlphaNumeric</b>
